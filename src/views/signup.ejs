@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/login_style.css">
+    <title>Sign Up Page</title>
+</head>
+<body>
+    <div class="container">
+        <img src="https://www.river-cleanup.org/images/logo.png" alt="River CleanUp Logo" class="logos">
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="email-address" required>
+            </div>
+            <div class="form-group" id="password-container">
+                <input type="password" id="password" name="password" class="password-input" placeholder="Password" required>
+                <label style="font-size: 14px; display: block; margin-top: 5px;">
+                    <input type="checkbox" onclick="togglePassword()" /> Show Password
+                </label>
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+    </div>
+    <footer></footer>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-password');
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>

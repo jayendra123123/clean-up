@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>River CleanUp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="/en" class="logo-link">
+                <img src="https://www.river-cleanup.org/images/logo.png" alt="River CleanUp Logo" class="logo">
+            </a>
+            <div class="hamburger">
+                <span>
+                </span>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="program">Program</a></li>
+                <li><a href="#contact-us">Contact Us</a></li>
+                <li><a href="http://localhost:3019/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="close-bg"></div>
+    <div class="box-container" id="home">
+        <div class="image-wrapper">
+            <video id="riverVideo" autoplay muted loop>
+                <source src="458425_Rubbish_Litter_1920x1080.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="text"><h1>RIVER CleanUp</h1></div>
+        </div>
+    </div>
+    <section class="river-cleanup" id="about">
+        <div class="container">
+            <h1>River Cleanup Initiative</h1>
+            <p>At <strong>Your Company Name</strong>, we believe in making a positive impact on the environment and the communities around us. Our River Cleanup initiative is dedicated to preserving and restoring the natural beauty of our waterways, ensuring cleaner rivers for future generations.</p>
+            <p>Our goal is to reduce pollution, protect aquatic life, and raise awareness about the importance of maintaining healthy rivers. We organize regular cleanup drives, encourage local communities to participate, and work closely with environmental organizations to drive long-term sustainability efforts.</p>
+            <p>Join us in this essential cause! Together, we can make a difference, one river at a time.</p>
+
+            <h2>How You Can Help:</h2>
+            <ul>
+                <li><strong>Volunteer:</strong> Participate in our river cleanup events.</li>
+                <li><strong>Donate:</strong> Support our efforts to clean and restore rivers.</li>
+                <li><strong>Spread the Word:</strong> Share information about the importance of river conservation.</li>
+            </ul>
+
+            <p>For more information about upcoming events, please visit our <strong><a href="program.html">Events</a></strong> page or contact us directly.</p>
+        </div>
+    </section>
+   <li><a href="#contact-us"></a></li>
+
+<section class="contact-us" id="contact-us">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions, suggestions, or would like to get involved, feel free to reach out to us using the contact form below or through our email and social media!</p>
+
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p><strong>Email:</strong> HelloWord@gmail.com</p>
+            <p><strong>Phone:</strong> 91+ 1234567890</p>
+            <p><strong>Address:</strong> Fira, Santorini, 847 00, Cyclades, Greece</p>
+            <h2>Follow Us</h2>
+            <p>
+                <a href="#Facebook" target="_blank">Facebook</a> |
+                <a href="#twitter" target="_blank">Twitter</a> |
+                <a href="#instagram" target="_blank">Instagram</a>
+            </p>
+        </div>
+
+        <form class="contact-form" action="http://localhost:3019/api/contact" method="post">
+            <h2>Get in Touch</h2>
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="phone" name="phone" placeholder="Phone" required>
+            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            <textarea id="message" name="message" rows="5" placeholder="Message" required></textarea>
+            <button type="submit" id="submit-btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
+    <footer>
+        <p>@2025 River CleanUp.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenuContainer = document.querySelector('.mobile-menu-container');
+            const closeBg = document.querySelector('.close-bg');
+            const mobileMenuItem = document.querySelectorAll('.mobile-menu-item');
+          
+            function openMenu() {
+                mobileMenuContainer.classList.add('active-menu');
+            }
+          
+            hamburger.addEventListener('click', openMenu);
+          
+            function closeMenu() {
+                mobileMenuContainer.classList.remove('active-menu');
+            }
+          
+            closeBg.addEventListener('click', closeMenu);
+            mobileMenuItem.forEach(item => item.addEventListener('click', closeMenu));
+          
+            const submitBtn = document.querySelector('#submit-btn');
+            submitBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+          
+                const name = document.querySelector('#name').value.trim();
+                const email = document.querySelector('#email').value.trim();
+                const phone = document.querySelector('#phone').value.trim();
+                const subject = document.querySelector('#subject').value.trim();
+                const message = document.querySelector('#message').value.trim();
+          
+                if (!name || !email || !phone || !subject || !message) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+          
+                const formData = { name, email, phone, subject, message };
+                const apiUrl = '/api/contact';
+          
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData),
+                    });
+          
+                    if (response.ok) {
+                        alert('Message sent successfully!');
+                        document.querySelector('#name').value = '';
+                        document.querySelector('#email').value = '';
+                        document.querySelector('#phone').value = '';
+                        document.querySelector('#subject').value = '';
+                        document.querySelector('#message').value = '';
+                    } else {
+                        const error = await response.json();
+                        alert(`Failed to send the message: ${error.message || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    alert(`An error occurred: ${error.message}`);
+                }
+            });
+          });   
+          
+          async function logout() {
+            try {
+              await fetch('http://localhost:3019/logout', {
+                credentials: 'include' 
+              });
+              window.location.href = 'login'; 
+            } catch (err) {
+              alert("Logout failed.");
+            }
+          }
+          
+    </script>
+</body>
+</html>
