@@ -286,7 +286,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="program">Program</a></li>
                 <li><a href="#contact-us">Contact Us</a></li>
-                <li><a href="http://localhost:3019/logout">Logout</a></li>
+                <li><a href="https://clean-up-rw7s.onrender.com/logout">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -337,7 +337,7 @@
             </p>
         </div>
 
-        <form class="contact-form" action="http://localhost:3019/api/contact" method="post">
+        <form class="contact-form" action="https://clean-up-rw7s.onrender.com/api/contact" method="post">
             <h2>Get in Touch</h2>
             <input type="text" id="name" name="name" placeholder="Name" required>
             <input type="email" id="email" name="email" placeholder="Email" required>
@@ -416,7 +416,7 @@
           
           async function logout() {
             try {
-              await fetch('http://localhost:3019/logout', {
+              await fetch('https://clean-up-rw7s.onrender.com/logout', {
                 credentials: 'include' 
               });
               window.location.href = 'login'; 
