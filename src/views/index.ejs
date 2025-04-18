@@ -14,7 +14,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
           }
-        
+      
           nav {
             background-color: #2c3e50;
             padding: 10px 20px;
@@ -34,20 +34,7 @@
           .logo {
             height: 50px;
           }
-        
-          .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            cursor: pointer;
-          }
-        
-          .hamburger span {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-          }
-        
+
           nav ul {
             list-style: none;
             padding: 0;
@@ -69,29 +56,53 @@
             text-decoration: underline;
             color: black;
           }
+          
+          .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: rgba(128, 128, 128, 0.326);
+            backdrop-filter: blur(10px);
+            box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            z-index: 999;
+          }
+      
+          .sidebar li, .sidebar a {
+            width: 100%;
+            padding: 15px;
+            color: white;
+          }
+      
+          .menu-btn {
+            display: none;
+          }
+      
+          @media (max-width: 800px) {
+            .hideonphone {
+              display: none;
+            }
+            .menu-btn {
+              display: block;
+            }
+          }
+      
+          @media (max-width: 400px) {
+            .sidebar {
+              width: 100%;
+            }
+          }
         
           .login-link a {
             font-family: Georgia, 'Times New Roman', Times, serif;
             color: green;
           }
-        
-          .mobile-menu-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            background: white;
-            width: 250px;
-            height: 100vh;
-            z-index: 1001;
-            padding: 20px;
-            transition: 0.3s;
-          }
-        
-          .mobile-menu-container.active-menu {
-            display: block;
-          }
-        
+
           .close-bg {
             display: none;
             position: fixed;
@@ -101,10 +112,6 @@
             width: 100vw;
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
-          }
-        
-          .mobile-menu-container.active-menu ~ .close-bg {
-            display: block;
           }
         
           .image-wrapper {
@@ -249,47 +256,36 @@
             background-color: #2c3e50;
             color: white;
           }
-        
-          @media (max-width: 768px) {
-            nav ul {
-              display: none;
-            }
-        
-            .hamburger {
-              display: flex;
-            }
-        
-            .mobile-menu-container ul {
-              display: flex;
-              flex-direction: column;
-              gap: 15px;
-            }
-        
-            .mobile-menu-container li a {
-              color: #2c3e50;
-            }
-          }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="/en" class="logo-link">
-                <img src="https://www.river-cleanup.org/images/logo.png" alt="River CleanUp Logo" class="logo">
-            </a>
-            <div class="hamburger">
-                <span>
-                </span>
-            </div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="program">Program</a></li>
-                <li><a href="#contact-us">Contact Us</a></li>
-                <li><a href="https://clean-up-rw7s.onrender.com/logout">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
+  <nav>
+    <div class="nav-container">
+      <ul class="sidebar">
+        <li onclick="hidesidebar()">
+          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a>
+        </li>
+        <li><a href="index">Home</a></li>
+        <li><a href="index">About</a></li>
+        <li><a href="program">Program</a></li>
+        <li><a href="index">Contact Us</a></li>
+        <li><a href="https://clean-up-rw7s.onrender.com/logout">Logout</a></li>
+      </ul>
+      <a href="/en" class="logo-link">
+        <img src="https://www.river-cleanup.org/images/logo.png" alt="River CleanUp Logo" class="logo">
+      </a>
+      <ul>
+        <li class="hideonphone"><a href="index">Home</a></li>
+        <li class="hideonphone"><a href="index">About</a></li>
+        <li class="hideonphone"><a href="program">Program</a></li>
+        <li class="hideonphone"><a href="index">Contact Us</a></li>
+        <li class="hideonphone"><a href="https://clean-up-rw7s.onrender.com/logout">Logout</a></li>
+        <li class="menu-btn" onclick="showsidebar()">
+          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <div class="close-bg"></div>
     <div class="box-container" id="home">
         <div class="image-wrapper">
@@ -353,6 +349,13 @@
         <p>@2025 River CleanUp.</p>
     </footer>
     <script>
+        function showsidebar() {
+          document.querySelector('.sidebar').style.display = 'flex';
+        }
+
+        function hidesidebar() {
+          document.querySelector('.sidebar').style.display = 'none';
+        }
         document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.querySelector('.hamburger');
             const mobileMenuContainer = document.querySelector('.mobile-menu-container');
@@ -424,7 +427,6 @@
               alert("Logout failed.");
             }
           }
-          
     </script>
 </body>
 </html>
