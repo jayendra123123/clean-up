@@ -96,7 +96,7 @@ app.post('/api/contact', (req, res) => {
 // Views
 app.get('/', async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: 1 }); // Sort by date ascending
+    const events = await Event.find().sort({ date: 1 }).populate('createdBy', 'name email'); // Sort by date ascending and populate creator
     res.render('index', { events, user: req.session.user || null });
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -107,7 +107,7 @@ app.get('/signup', (req, res) => res.render('signup'));
 app.get('/program', (req, res) => res.render('program', { user: req.session.user || null }));
 app.get('/index', async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: 1 }); // Sort by date ascending
+    const events = await Event.find().sort({ date: 1 }).populate('createdBy', 'name email'); // Sort by date ascending and populate creator
     res.render('index', { events, user: req.session.user || null });
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -178,22 +178,33 @@ app.post('/login', async (req, res) => {
 app.post('/submit', async (req, res) => {
   const { address, workers, date } = req.body;
   
+  console.log('📝 Event submission received:', { address, workers, date });
+  console.log('👤 User session:', req.session.user);
+  
   // Check if user is logged in
   if (!req.session.user) {
+    console.log('❌ User not logged in');
     return res.status(401).json({ error: 'You must be logged in to create events' });
   }
   
   try {
-    const saved = await Event.create({ 
+    const eventData = { 
       address, 
       workers, 
       date, 
       createdBy: req.session.user.id 
-    });
-    res.status(200).json(saved);
+    };
+    
+    console.log('💾 Creating event with data:', eventData);
+    const saved = await Event.create(eventData);
+    console.log('✅ Event saved successfully:', saved);
+    
+    // Populate the creator information for the response
+    const populatedEvent = await Event.findById(saved._id).populate('createdBy', 'name email');
+    res.status(200).json(populatedEvent);
   } catch (error) {
     console.error('❌ Save failed:', error);
-    res.status(400).send("Error saving event");
+    res.status(400).json({ error: "Error saving event: " + error.message });
   }
 });
 
@@ -209,6 +220,9 @@ app.get('/events', async (req, res) => {
 
 app.delete('/events/:id', async (req, res) => {
   try {
+    console.log('🗑️ Delete request for event:', req.params.id);
+    console.log('👤 User session:', req.session.user);
+    
     // Check if user is logged in
     if (!req.session.user) {
       return res.status(401).send("You must be logged in to delete events");
@@ -220,11 +234,14 @@ app.delete('/events/:id', async (req, res) => {
       return res.status(404).send("Event not found");
     }
     
-    if (event.createdBy.toString() !== req.session.user.id) {
+    // If event has no creator (legacy event), only allow deletion by any logged-in user
+    // If event has creator, only allow deletion by the creator
+    if (event.createdBy && event.createdBy.toString() !== req.session.user.id) {
       return res.status(403).send("You can only delete events you created");
     }
     
     await Event.findByIdAndDelete(req.params.id);
+    console.log('✅ Event deleted successfully');
     res.status(200).send("Event deleted");
   } catch (error) {
     console.error('❌ Delete failed:', error);
