@@ -94,10 +94,26 @@ app.post('/api/contact', (req, res) => {
 });
 
 // Views
-app.get('/', (req, res) => res.render('login'));
+app.get('/', async (req, res) => {
+  try {
+    const events = await Event.find().sort({ date: 1 }); // Sort by date ascending
+    res.render('index', { events });
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.render('index', { events: [] });
+  }
+});
 app.get('/signup', (req, res) => res.render('signup'));
 app.get('/program', (req, res) => res.render('program'));
-app.get('/index', (req, res) => res.render('index'));
+app.get('/index', async (req, res) => {
+  try {
+    const events = await Event.find().sort({ date: 1 }); // Sort by date ascending
+    res.render('index', { events });
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.render('index', { events: [] });
+  }
+});
 app.get('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -123,7 +139,7 @@ app.post('/signup', async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   await User.create({ name: username, email, password: hashedPassword });
 
-  res.render('index');
+  res.redirect('/index');
 });
 
 // User Login
@@ -138,7 +154,7 @@ app.post('/login', async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
-      res.render('index');
+      res.redirect('/index');
     } else {
       res.send('Wrong password');
     }
