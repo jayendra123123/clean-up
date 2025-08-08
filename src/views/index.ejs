@@ -243,7 +243,7 @@
     }
 
     .event-card::after {
-      content: "Click to view location →";
+      content: "Click to view program →";
       position: absolute;
       bottom: 10px;
       right: 15px;
@@ -254,7 +254,7 @@
     }
 
     .event-card.not-logged-in::after {
-      content: "Login to view location →";
+      content: "Login to view program →";
     }
 
     .event-date {
@@ -472,9 +472,9 @@
 
     function handleEventClick(address) {
       if (window.userData) {
-        // User is logged in, open Google Maps for the event location
+        // User is logged in, redirect to program page with the event address
         const encodedAddress = encodeURIComponent(address);
-        window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
+        window.location.href = `/program?address=${encodedAddress}`;
       } else {
         // User not logged in, redirect to login
         window.location.href = '/login';

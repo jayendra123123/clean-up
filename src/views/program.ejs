@@ -436,6 +436,20 @@
 
     window.onload = async () => {
       console.log('🔄 Loading events...');
+      
+      // Check if there's an address parameter in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const addressParam = urlParams.get('address');
+      
+      if (addressParam) {
+        console.log('📍 Address parameter found:', addressParam);
+        // Auto-load the map for the specified address
+        document.getElementById('mapFrame').src = `https://maps.google.com/maps?saddr=My+Location&daddr=${addressParam}&output=embed`;
+        
+        // Optionally scroll to the map
+        document.getElementById('mapFrame').scrollIntoView({ behavior: 'smooth' });
+      }
+      
       try {
         const res = await fetch('/events');
         console.log('📡 Response status:', res.status);
