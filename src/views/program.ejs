@@ -282,7 +282,11 @@
       content.onclick = () => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
       entry.appendChild(content);
 
-      if (window.userData && createdBy && createdBy._id === window.userData._id) {
+      if (window.userData && createdBy && createdBy._id === window.userData.id) {
+        console.log('✅ User owns this event, showing edit/delete buttons');
+        console.log('👤 Current user ID:', window.userData.id);
+        console.log('📝 Event creator ID:', createdBy._id);
+        
         const editBtn = document.createElement('button');
         editBtn.className = 'edit';
         editBtn.textContent = 'Edit';
