@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Route & Worker Info</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body, html {
       font-family: Arial, sans-serif;
       background: #eef1f5;
@@ -22,7 +17,6 @@
       padding-right: 20px;
       min-height: 100vh;
     }
-
     nav {
       background-color: #2c3e50;
       padding: 10px 20px;
@@ -32,7 +26,6 @@
       left: 0;
       z-index: 1000;
     }
-
     .nav-container {
       display: flex;
       justify-content: space-between;
@@ -40,23 +33,14 @@
       max-width: 1200px;
       margin: auto;
     }
-
-    .logo {
-      height: 50px;
-      width: auto;
-    }
-
+    .logo { height: 50px; width: auto; }
     nav ul {
       list-style: none;
       display: flex;
       justify-content: flex-end;
       align-items: center;
     }
-
-    nav ul li {
-      margin: 0 15px;
-    }
-
+    nav ul li { margin: 0 15px; }
     nav ul li a {
       text-decoration: none;
       color: white;
@@ -64,24 +48,14 @@
       display: flex;
       align-items: center;
     }
-
-    nav ul li a:hover {
-      color: #ffd9008a;
-      text-decoration: underline;
-    }
-
+    nav ul li a:hover { color: #ffd9008a; text-decoration: underline; }
     .username-link {
       background-color: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       padding: 5px 10px !important;
       transition: background-color 0.3s ease;
     }
-
-    .username-link:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white !important;
-    }
-
+    .username-link:hover { background-color: rgba(255, 255, 255, 0.2); color: white !important; }
     .sidebar {
       position: fixed;
       top: 0;
@@ -97,32 +71,13 @@
       justify-content: flex-start;
       z-index: 999;
     }
-
-    .sidebar li, .sidebar a {
-      width: 100%;
-      padding: 15px;
-      color: white;
-    }
-
-    .menu-btn {
-      display: none;
-    }
-
+    .sidebar li, .sidebar a { width: 100%; padding: 15px; color: white; }
+    .menu-btn { display: none; }
     @media (max-width: 800px) {
-      .hideonphone {
-        display: none;
-      }
-      .menu-btn {
-        display: block;
-      }
+      .hideonphone { display: none; }
+      .menu-btn { display: block; }
     }
-
-    @media (max-width: 400px) {
-      .sidebar {
-        width: 100%;
-      }
-    }
-
+    @media (max-width: 400px) { .sidebar { width: 100%; } }
     .container {
       background: white;
       padding: 30px 40px;
@@ -133,7 +88,6 @@
       max-width: 600px;
       margin-bottom: 30px;
     }
-
     input[type="text"], input[type="number"], input[type="date"] {
       width: 100%;
       padding: 12px;
@@ -142,7 +96,6 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-
     button {
       padding: 12px 20px;
       background-color: #007BFF;
@@ -152,11 +105,7 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
+    button:hover { background-color: #0056b3; }
     iframe {
       width: 100%;
       height: 600px;
@@ -165,7 +114,6 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       max-width: 1200px;
     }
-
     .details {
       background-color: white;
       padding: 20px;
@@ -175,7 +123,6 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     .entry {
       margin-bottom: 15px;
       padding: 15px;
@@ -186,11 +133,7 @@
       transition: box-shadow 0.3s ease;
       cursor: pointer;
     }
-
-    .entry:hover {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
+    .entry:hover { box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
     .entry button {
       margin-top: 10px;
       margin-right: 10px;
@@ -201,32 +144,13 @@
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
     }
-
-    .entry button:hover {
-      transform: scale(1.05);
-    }
-
-    .entry button.edit {
-      background-color: #4caf50;
-      color: white;
-    }
-
-    .entry button.edit:hover {
-      background-color: #45a049;
-    }
-
-    .entry button.delete {
-      background-color: #f44336;
-      color: white;
-    }
-
-    .entry button.delete:hover {
-      background-color: #e53935;
-    }
-
+    .entry button:hover { transform: scale(1.05); }
+    .entry button.edit { background-color: #4caf50; color: white; }
+    .entry button.edit:hover { background-color: #45a049; }
+    .entry button.delete { background-color: #f44336; color: white; }
+    .entry button.delete:hover { background-color: #e53935; }
     .flex-container {
       gap: 20px;
-      max-width: none;
       flex: 1;
       display: flex;
       justify-content: space-between;
@@ -246,7 +170,7 @@
         </li>
         <li><a href="index">Home</a></li>
         <li><a href="index">About</a></li>
-        <li><a href="#progarm">Program</a></li>
+        <li><a href="#program">Program</a></li>
         <li><a href="index">Contact Us</a></li>
         <% if (user) { %>
           <li><a href="#" onclick="event.preventDefault(); logout();" class="username-link">👤 <%= user.name %></a></li>
@@ -260,7 +184,7 @@
       <ul>
         <li class="hideonphone"><a href="index">Home</a></li>
         <li class="hideonphone"><a href="index">About</a></li>
-        <li class="hideonphone"><a href="#progarm">Program</a></li>
+        <li class="hideonphone"><a href="#program">Program</a></li>
         <li class="hideonphone"><a href="index">Contact Us</a></li>
         <% if (user) { %>
           <li class="hideonphone"><a href="#" onclick="event.preventDefault(); logout();" class="username-link">👤 <%= user.name %></a></li>
@@ -274,7 +198,7 @@
     </div>
   </nav>
 
-  <div class="flex-container" id="progarm">
+  <div class="flex-container" id="program">
     <div class="details" id="outputInfo" style="flex: 1;">
       <div id="infoList"><h2>Events:</h2></div>
     </div>
@@ -292,28 +216,20 @@
   <iframe id="mapFrame" src="" allowfullscreen></iframe>
 
   <script>
-    // Pass user data to JavaScript safely
-    window.userData = <%= user ? JSON.stringify(user) : 'null' %>;
-    
-    function showsidebar() {
-      document.querySelector('.sidebar').style.display = 'flex';
-    }
+    <% if (user) { %>
+      window.userData = <%- JSON.stringify(user) %>;
+    <% } else { %>
+      window.userData = null;
+    <% } %>
 
-    function hidesidebar() {
-      document.querySelector('.sidebar').style.display = 'none';
-    }
+    function showsidebar() { document.querySelector('.sidebar').style.display = 'flex'; }
+    function hidesidebar() { document.querySelector('.sidebar').style.display = 'none'; }
 
     document.getElementById('eventForm').addEventListener('submit', handleSubmit);
 
     async function handleSubmit(event) {
       event.preventDefault();
-      
-      console.log('📝 Form submission started');
-      console.log('👤 Current user:', window.userData);
-      
-      // Check if user is logged in
       if (!window.userData) {
-        console.log('❌ User not logged in');
         alert("You must be logged in to create events.");
         window.location.href = '/login';
         return;
@@ -322,77 +238,51 @@
       const address = document.getElementById('address').value;
       const workers = document.getElementById('workers').value;
       const date = document.getElementById('Date').value;
-      
-      console.log('📋 Form data:', { address, workers, date });
-      
       const encodedAddress = encodeURIComponent(address);
 
       try {
-        console.log('🚀 Sending event to server...');
         const response = await fetch('/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ address, workers, date })
         });
 
-        console.log('📡 Response status:', response.status);
-        
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('❌ Server error:', errorText);
           alert("Failed to save event: " + errorText);
           return;
         }
 
         const savedEvent = await response.json();
-        console.log('✅ Event saved successfully:', savedEvent);
-        
         showEntry(savedEvent);
-        
-        // Clear form and update map
+
         document.getElementById('mapFrame').src = `https://maps.google.com/maps?saddr=My+Location&daddr=${encodedAddress}&output=embed`;
-        document.getElementById('address').value = '';
-        document.getElementById('workers').value = '';
-        document.getElementById('Date').value = '';
-        
-        console.log('🧹 Form cleared and map updated');
+        document.getElementById('eventForm').reset();
       } catch (error) {
-        console.error('❌ Error saving event:', error);
         alert("Server error: " + error.message);
       }
     }
 
     function showEntry(event) {
-      console.log('🎯 showEntry called with:', event);
-      
-      if (!event || !event.address || !event.workers || !event.date) {
-        console.log('❌ Invalid event data:', event);
-        return;
-      }
+      if (!event || !event.address || !event.workers || !event.date) return;
 
       const { _id, address, workers, date, createdBy } = event;
-      console.log('📝 Event details:', { _id, address, workers, date, createdBy });
-      
       const encodedAddress = encodeURIComponent(address);
-
       const entry = document.createElement('div');
       entry.className = 'entry';
 
+      const creatorName = (createdBy && createdBy.name) ? createdBy.name : 'Unknown';
       const content = document.createElement('div');
       content.innerHTML = `
         <strong>Address:</strong> ${address}<br>
         <strong>Workers:</strong> ${workers}<br>
         <strong>Date:</strong> ${date}<br>
-        <strong>Created by:</strong> ${createdBy?.name || 'Unknown'}
+        <strong>Created by:</strong> ${creatorName}
       `;
       content.onclick = () => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
-
       entry.appendChild(content);
 
-      // Only show edit/delete buttons if the current user created this event
-      if (window.userData && createdBy && createdBy._id === window.userData.id) {
-        console.log('✅ User owns this event, showing edit/delete buttons');
-        
+      if (window.userData && createdBy && createdBy._id === window.userData._id) {
         const editBtn = document.createElement('button');
         editBtn.className = 'edit';
         editBtn.textContent = 'Edit';
@@ -409,16 +299,14 @@
         deleteBtn.onclick = async () => {
           if (_id) {
             try {
-              console.log('🗑️ Deleting event:', _id);
               const res = await fetch(`/events/${_id}`, { method: 'DELETE' });
               if (!res.ok) {
                 const errorText = await res.text();
-                return alert("Delete failed: " + errorText);
+                alert("Delete failed: " + errorText);
+                return;
               }
-              console.log('✅ Event deleted successfully');
               entry.remove();
             } catch (error) {
-              console.error('❌ Error deleting event:', error);
               alert("Delete failed.");
             }
           }
@@ -426,62 +314,36 @@
 
         entry.appendChild(editBtn);
         entry.appendChild(deleteBtn);
-      } else {
-        console.log('ℹ️ User does not own this event or not logged in');
       }
 
       document.getElementById('infoList').appendChild(entry);
-      console.log('✅ Event entry added to DOM');
     }
 
     window.onload = async () => {
-      console.log('🔄 Loading events...');
-      
-      // Check if there's an address parameter in the URL
       const urlParams = new URLSearchParams(window.location.search);
       const addressParam = urlParams.get('address');
-      
       if (addressParam) {
-        console.log('📍 Address parameter found:', addressParam);
-        // Auto-load the map for the specified address
         document.getElementById('mapFrame').src = `https://maps.google.com/maps?saddr=My+Location&daddr=${addressParam}&output=embed`;
-        
-        // Optionally scroll to the map
         document.getElementById('mapFrame').scrollIntoView({ behavior: 'smooth' });
       }
-      
+
       try {
         const res = await fetch('/events');
-        console.log('📡 Response status:', res.status);
-        
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const events = await res.json();
-        console.log('📋 Events received:', events);
-        console.log('📊 Number of events:', events.length);
-        
         if (events.length === 0) {
-          console.log('ℹ️ No events found');
           document.getElementById('infoList').innerHTML = '<h2>Events:</h2><p>No events found. Create the first one!</p>';
         } else {
-          events.forEach((event, index) => {
-            console.log(`📌 Processing event ${index + 1}:`, event);
-            showEntry(event);
-          });
+          events.forEach(showEntry);
         }
       } catch (e) {
-        console.error("❌ Error loading events:", e);
         document.getElementById('infoList').innerHTML = '<h2>Events:</h2><p>Error loading events. Please refresh the page.</p>';
       }
     };
 
     async function logout() {
       try {
-        await fetch('/logout', {
-          credentials: 'include'
-        });
+        await fetch('/logout', { credentials: 'include' });
         window.location.href = '/';
       } catch (err) {
         alert("Logout failed.");
