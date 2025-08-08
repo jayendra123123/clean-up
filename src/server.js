@@ -97,21 +97,21 @@ app.post('/api/contact', (req, res) => {
 app.get('/', async (req, res) => {
   try {
     const events = await Event.find().sort({ date: 1 }); // Sort by date ascending
-    res.render('index', { events });
+    res.render('index', { events, user: req.session.user || null });
   } catch (error) {
     console.error('Error fetching events:', error);
-    res.render('index', { events: [] });
+    res.render('index', { events: [], user: req.session.user || null });
   }
 });
 app.get('/signup', (req, res) => res.render('signup'));
-app.get('/program', (req, res) => res.render('program'));
+app.get('/program', (req, res) => res.render('program', { user: req.session.user || null }));
 app.get('/index', async (req, res) => {
   try {
     const events = await Event.find().sort({ date: 1 }); // Sort by date ascending
-    res.render('index', { events });
+    res.render('index', { events, user: req.session.user || null });
   } catch (error) {
     console.error('Error fetching events:', error);
-    res.render('index', { events: [] });
+    res.render('index', { events: [], user: req.session.user || null });
   }
 });
 app.get('/logout', (req, res) => {
@@ -119,7 +119,7 @@ app.get('/logout', (req, res) => {
     if (err) {
       return res.status(500).send("Logout failed");
     }
-    res.redirect('/login'); 
+    res.redirect('/'); 
   });
 });
 app.get('/login', (req, res) => {
@@ -137,7 +137,13 @@ app.post('/signup', async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await User.create({ name: username, email, password: hashedPassword });
+  const newUser = await User.create({ name: username, email, password: hashedPassword });
+  
+  req.session.user = {
+    id: newUser._id,
+    name: newUser.name,
+    email: newUser.email
+  };
 
   res.redirect('/index');
 });
@@ -154,6 +160,11 @@ app.post('/login', async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
+      req.session.user = {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      };
       res.redirect('/index');
     } else {
       res.send('Wrong password');
@@ -166,8 +177,19 @@ app.post('/login', async (req, res) => {
 
 app.post('/submit', async (req, res) => {
   const { address, workers, date } = req.body;
+  
+  // Check if user is logged in
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'You must be logged in to create events' });
+  }
+  
   try {
-    const saved = await Event.create({ address, workers, date });
+    const saved = await Event.create({ 
+      address, 
+      workers, 
+      date, 
+      createdBy: req.session.user.id 
+    });
     res.status(200).json(saved);
   } catch (error) {
     console.error('❌ Save failed:', error);
@@ -177,7 +199,7 @@ app.post('/submit', async (req, res) => {
 
 app.get('/events', async (req, res) => {
   try {
-    const events = await Event.find();
+    const events = await Event.find().populate('createdBy', 'name email');
     res.json(events);
   } catch (error) {
     console.error('❌ Fetch failed:', error);
@@ -187,6 +209,21 @@ app.get('/events', async (req, res) => {
 
 app.delete('/events/:id', async (req, res) => {
   try {
+    // Check if user is logged in
+    if (!req.session.user) {
+      return res.status(401).send("You must be logged in to delete events");
+    }
+    
+    // Find the event and check if the user is the creator
+    const event = await Event.findById(req.params.id);
+    if (!event) {
+      return res.status(404).send("Event not found");
+    }
+    
+    if (event.createdBy.toString() !== req.session.user.id) {
+      return res.status(403).send("You can only delete events you created");
+    }
+    
     await Event.findByIdAndDelete(req.params.id);
     res.status(200).send("Event deleted");
   } catch (error) {

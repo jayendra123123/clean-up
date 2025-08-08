@@ -13,7 +13,8 @@ const loginSchema = new mongoose.Schema({
 const eventSchema = new mongoose.Schema({
   address: { type: String, required: true },
   workers: { type: String, required: true },
-  date: { type: String, required: true }
+  date: { type: String, required: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }
 });
 
 const User = mongoose.model("user", loginSchema);
